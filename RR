@@ -1,0 +1,66 @@
+import java.util.Scanner;
+public class RR
+{
+    public void Print(){
+        Scanner scanner = new Scanner(System.in);
+        int x, y, z, quantum, sum = 0;
+        System.out.println("Enter Number of Process:");
+        int num = scanner.nextInt();
+        int burstTime[] = new int[num];
+        int waitingTime[] = new int[num];
+        int totalAverageTime[] = new int[num];
+        
+        for(x = 0; x < num; x++)
+        {
+            System.out.println("Enter Burst Time For Process"+(x+1)+":");
+            burstTime[x] = scanner.nextInt();
+        }
+        System.out.println("Enter Time Quantum:");
+        quantum = scanner.nextInt();
+        
+        for(x = 0; x < num; x++)
+        totalAverageTime[x] = burstTime[x];
+        for(x = 0; x < num; x++)
+        waitingTime[x] = 0;
+        do
+        {
+            for(x = 0; x < num; x++)
+            {
+                if(burstTime[x] > quantum)
+                {
+                    burstTime[x]-=quantum;
+                    for(y = 0; y < num; y++)
+                    {
+                        if((y!=x) && (burstTime[y] != 0))
+                        waitingTime[y]+=quantum;
+                    }
+                }
+                else
+                {
+                    for(y = 0; y < num; y++)
+                    {
+                        if((y!=x) && (burstTime[y] != 0))
+                        waitingTime[y]+=burstTime[x];
+                    }
+                    burstTime[x] = 0;
+                }
+            }
+            sum = 0;
+            for(z = 0; z < num; z++)
+            sum = sum+burstTime[z];
+        }
+        while(sum!=0);
+        
+        System.out.println("Process\t\tBurst Time\tWaiting Time");
+        for(x = 0; x < num; x++)
+        {
+            System.out.println("Process "+(x+1)+"\t"+totalAverageTime[x]+"\t"+waitingTime[x]);
+        }
+        float avg_wt=0;
+        for(y = 0; y < num; y++)
+        {
+            avg_wt+=waitingTime[y];
+        }
+        System.out.println("Average Waiting Time "+(avg_wt/num));
+    }   
+}
