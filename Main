@@ -1,0 +1,40 @@
+import java.util.Scanner;
+public class Main
+{
+    public Main(){
+        Scanner sc = new Scanner(System.in);
+        
+        FCFS s1 = new FCFS();
+        SJF s2 = new SJF();
+        PS s3 = new PS();
+        RR s4 = new RR();
+        
+        int input = 1;
+        System.out.println("SCHEDULING");
+        while(input!=5){
+        System.out.println("\nPlease Select Type of Scheduling: \n1. First Come First Serve");
+        System.out.println("2. Shortest Job First");
+        System.out.println("3. Priority Scheduling");
+        System.out.println("4. Round Robin Scheduling");
+        System.out.println("5. EXIT");
+        input = sc.nextInt();
+        
+        switch(input){
+            case 1:
+            s1.Print();
+            break;
+            case 2:
+            s2.Print();
+            break;
+            case 3:
+            s3.Print();
+            break;
+            case 4:
+            s4.Print();
+            break;
+            case 5:
+            break;
+           }
+        }
+    }
+}
