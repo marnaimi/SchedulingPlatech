@@ -1,0 +1,73 @@
+import java.util.Scanner;
+public class SJF
+{
+   public void Print(){
+       Scanner scanner = new Scanner(System.in);
+       int processNumber[]=new int[10];
+       int burstTime[] = new int[10];
+       int waitingTime[] = new int[10];
+       int tempWaitingTime[] = new int[10];
+       int tempProcessNumber[] = new int[12];//stores process no temporary
+       int temp[]=new int[12];//represent Gantt chart
+       int num, x, y, z, t, t2;
+
+       float averageWaitingTime ,totalWaitingTime = 0;
+       System.out.println("Enter Number of Processes(Less than 10): ");
+       num = scanner.nextInt();
+       for(x = 0; x < num; x++)
+       {
+           System.out.println("Enter The Burst Time of Process"+(x+1)+":");
+           burstTime[x] = scanner.nextInt();
+           temp[x] = burstTime[x];
+           processNumber[x] = x+1;
+           tempProcessNumber[x] = processNumber[x];
+        }
+        for(x = 0; x < num; x++)
+        {
+            z = 0;
+            while(z <= num-x)
+            {
+                if(temp[z] > temp[z+1])
+                {
+                    t = temp[z];
+                    temp[z] = temp[z+1];
+                    temp[z+1] = t;
+                    t2 = tempProcessNumber[z];
+                    tempProcessNumber[z] = tempProcessNumber[z+1];
+                    tempProcessNumber[z+1] = t2;
+                }
+                z++;
+            }
+        }   
+        for(x=0; x < num; x++)
+        {
+            temp[x] = temp[x+2];
+            tempProcessNumber[x] = tempProcessNumber[x+2];
+        }
+        tempWaitingTime[0] = 0;
+        for(x = 1; x < num; x++)
+        tempWaitingTime[x] = tempWaitingTime[x-1] + temp[x-1];
+        for(x = 0; x < num; x++)
+        {
+            y = 0;
+            while(tempProcessNumber[x] != processNumber[y] && y < num)
+            y++;
+            waitingTime[y] = tempWaitingTime[x];
+        }
+        
+        
+        for(x = 0; x < num; x++)
+        {
+            totalWaitingTime = totalWaitingTime + waitingTime[x];
+        }
+        averageWaitingTime = totalWaitingTime/num;
+        System.out.println("Process\t\tBurst Time\tWaiting Time");
+        for(x = 0; x < num; x++)
+        {
+            System.out.print("Process "+processNumber[x]+"\t"+burstTime[x]+"\t\t"+waitingTime[x]);
+            System.out.println();
+        }
+        System.out.println("Average Waiting Time: " + averageWaitingTime);
+    }
+       
+}
