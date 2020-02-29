@@ -1,0 +1,38 @@
+import java.util.*;
+public class PS {
+    public static void Print()
+    {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter Number of Process: ");
+        int num = scanner.nextInt();
+        
+        int[][] array = new int[num][2];
+        
+        for(int x = 0; x < array.length; x++ )
+        {
+            System.out.print("Enter Burst Time for Process" + " " + (x+1) + ": ");
+            array[x][0] = scanner.nextInt();
+            
+            System.out.print("Enter Priority Number for Process" + " " +(x+1) +": ");
+            array[x][1] = scanner.nextInt();
+            
+           
+        }
+            double ave = 0;
+            double count = 0;
+            
+            Arrays.sort(array, (a, b) -> Double.compare(a[1], b[1]));
+             
+            for(int y=0; y < array.length-1; y++)
+            {
+                
+                count += array[y][0];
+                ave += count;
+                System.out.println("Average Waiting Time: " + ave + " ,Count: " + count);
+            }
+            
+            ave /= num;
+            System.out.print(ave);
+    }    
+}
+
